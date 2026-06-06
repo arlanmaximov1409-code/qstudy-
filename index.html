@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="QStudy — your study companion. Learn across every class." />
+  <title>QStudy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Guest / marketing app (before login) -->
+  <div class="app-frame" id="guest-shell">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="shell top-bar__inner">
+      <button class="icon-btn" type="button" aria-label="Cloud sync">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+        </svg>
+      </button>
+
+      <div class="profile-notch">
+        <button class="profile-avatar" type="button" id="profile-btn" aria-label="Account — log in or sign up">
+          <span class="profile-avatar__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+          </span>
+          <span class="profile-avatar__initial" id="profile-initial" hidden></span>
+        </button>
+      </div>
+
+      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="side-menu" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      </div>
+    </header>
+
+    <!-- Side menu overlay -->
+    <nav class="side-menu" id="side-menu" aria-label="Menu" hidden>
+      <a href="#home" data-view="home">Home</a>
+      <a href="#auth" data-view="auth">Account</a>
+      <a href="#settings" data-view="settings">Settings</a>
+    </nav>
+    <div class="menu-backdrop" hidden></div>
+
+    <main class="main" id="main">
+      <!-- Home view (matches mockup) -->
+      <section class="view view--active" id="home" data-view="home" aria-label="Home">
+        <div class="home-hero">
+          <div class="home-hero__bg" aria-hidden="true">
+            <div class="home-hero__gradient"></div>
+            <div class="home-hero__orb home-hero__orb--1"></div>
+            <div class="home-hero__orb home-hero__orb--2"></div>
+          </div>
+
+          
+
+          <div class="home-hero__content shell">
+            <p class="home-hero__eyebrow">Your study companion</p>
+            <h1 class="home-hero__title" aria-label="QStudy">
+              <span class="home-hero__title-q">Q</span><span class="home-hero__title-rest">Study</span>
+            </h1>
+            <button class="home-hero__cta" type="button" id="home-cta">Get started</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Learn view -->
+      <section class="view" id="learn" data-view="learn" aria-label="Learn" hidden>
+        <div class="shell">
+        <h2 class="view-title">Why QStudy</h2>
+        <p class="view-lead">Calm learning built on clear hierarchy, feedback, and focus.</p>
+        <ul class="lesson-list">
+          <li class="lesson-item">
+            <span class="lesson-icon" aria-hidden="true">01</span>
+            <div>
+              <h3>One idea per screen</h3>
+              <p>Single concepts per lesson — less noise, better memory.</p>
+              <div class="progress"><span style="--p: 100%"></span></div>
+            </div>
+          </li>
+          <li class="lesson-item">
+            <span class="lesson-icon" aria-hidden="true">02</span>
+            <div>
+              <h3>Visible progress</h3>
+              <p>Track bars show exactly where you are.</p>
+              <div class="progress"><span style="--p: 65%"></span></div>
+            </div>
+          </li>
+          <li class="lesson-item">
+            <span class="lesson-icon" aria-hidden="true">03</span>
+            <div>
+              <h3>Layered depth</h3>
+              <p>Unlock advanced topics when you are ready.</p>
+              <div class="progress"><span style="--p: 30%"></span></div>
+            </div>
+          </li>
+        </ul>
+        </div>
+      </section>
+
+      <!-- Paths view -->
+      <section class="view" id="paths" data-view="paths" aria-label="Paths" hidden>
+        <div class="shell">
+        <h2 class="view-title">Learning paths</h2>
+        <div class="path-list">
+          <article class="path-item">
+            <span class="path-badge">Beginner</span>
+            <h3>UI foundations</h3>
+            <p>Layout, type, color, spacing.</p>
+          </article>
+          <article class="path-item path-item--active">
+            <span class="path-badge">Popular</span>
+            <h3>UX essentials</h3>
+            <p>Goals, flows, feedback, accessibility.</p>
+          </article>
+          <article class="path-item">
+            <span class="path-badge">Practice</span>
+            <h3>Motion &amp; transition</h3>
+            <p>Timing, easing, curved motion.</p>
+          </article>
+        </div>
+        </div>
+      </section>
+
+      <!-- Account: log in / sign up -->
+      <section class="view" id="auth" data-view="auth" aria-label="Account" hidden>
+        <div class="shell shell--narrow">
+          <div class="auth-card">
+            <!-- Logged out -->
+            <div id="auth-guest">
+              <h2 class="view-title">Welcome to QStudy</h2>
+              <p class="view-lead">Log in or create an account to save your progress.</p>
+
+              <div class="auth-tabs" role="tablist" aria-label="Account type">
+                <button class="auth-tab auth-tab--active" type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="panel-login" data-auth-tab="login">Log in</button>
+                <button class="auth-tab" type="button" role="tab" id="tab-signup" aria-selected="false" aria-controls="panel-signup" data-auth-tab="signup">Sign up</button>
+              </div>
+
+              <div class="auth-panels">
+                <form class="auth-form auth-panel auth-panel--active" id="panel-login" role="tabpanel" aria-labelledby="tab-login" data-auth-panel="login">
+                  <p class="auth-message" id="login-message" role="alert" hidden></p>
+                  <label class="auth-field">
+                    <span>Email</span>
+                    <input type="email" name="email" autocomplete="email" required placeholder="you@school.edu" />
+                  </label>
+                  <label class="auth-field">
+                    <span>Password</span>
+                    <input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="Your password" />
+                  </label>
+                  <button class="btn-glow btn-glow--full" type="submit">Log in</button>
+                </form>
+
+                <form class="auth-form auth-panel" id="panel-signup" role="tabpanel" aria-labelledby="tab-signup" data-auth-panel="signup" hidden>
+                  <p class="auth-message" id="signup-message" role="alert" hidden></p>
+                  <label class="auth-field">
+                    <span>Full name</span>
+                    <input type="text" name="name" autocomplete="name" required minlength="2" placeholder="Alex Morgan" />
+                  </label>
+                  <label class="auth-field">
+                    <span>Email</span>
+                    <input type="email" name="email" autocomplete="email" required placeholder="you@school.edu" />
+                  </label>
+                  <label class="auth-field">
+                    <span>Password</span>
+                    <input type="password" name="password" autocomplete="new-password" required minlength="6" placeholder="At least 6 characters" />
+                  </label>
+                  <label class="auth-field">
+                    <span>Confirm password</span>
+                    <input type="password" name="confirm" autocomplete="new-password" required minlength="6" placeholder="Repeat password" />
+                  </label>
+                  <button class="btn-glow btn-glow--full" type="submit">Create account</button>
+                </form>
+              </div>
+
+              <p class="auth-note">Accounts are stored on this device only (demo).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings view -->
+      <section class="view" id="settings" data-view="settings" aria-label="Settings" hidden>
+        <div class="shell shell--narrow">
+        <h2 class="view-title">Settings</h2>
+        <form class="settings-form" aria-label="Preferences">
+          <label class="field">
+            <span>Email reminders</span>
+            <input type="checkbox" checked />
+          </label>
+          <label class="field">
+            <span>Reduced motion</span>
+            <input type="checkbox" id="reduced-motion-toggle" />
+          </label>
+          <label class="field field--full">
+            <span>Your email</span>
+            <input type="email" id="settings-email" placeholder="you@school.edu" />
+          </label>
+          <button class="btn-glow" type="button">Save preferences</button>
+        </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom dock with curved transition -->
+    <footer class="bottom-dock">
+      <div class="dock-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,28 C240,8 480,48 720,32 C960,16 1200,4 1440,20 L1440,72 L0,72 Z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <nav class="dock-nav" aria-label="Bottom navigation">
+        <div class="shell dock-nav__inner">
+        <button class="dock-btn dock-btn--active" type="button" data-nav="home" aria-label="Home" aria-current="page">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <path d="M9 21V12h6v9"/>
+          </svg>
+        </button>
+
+        <button class="dock-btn dock-btn--center" type="button" data-nav="learn" aria-label="Continue learning">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-3-6.7"/>
+            <path d="M21 3v6h-6"/>
+          </svg>
+        </button>
+
+        <button class="dock-btn" type="button" data-nav="settings" aria-label="Settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+        </div>
+      </nav>
+    </footer>
+  </div>
+
+  <!-- Dashboard (after login / sign up) -->
+  <div class="dashboard" id="dashboard-shell" hidden>
+    <aside class="dash-sidebar" aria-label="Main navigation">
+      <a class="dash-brand" href="#" data-dash-nav="home">
+        <span class="dash-brand__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M22 10v6M2 10l10-6 10 6-10 6-10-6z"/>
+            <path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/>
+          </svg>
+        </span>
+        <span class="dash-brand__text">QStudy</span>
+      </a>
+
+      <nav class="dash-nav">
+        <a class="dash-nav__link dash-nav__link--active" href="#" data-dash-nav="home">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          <span>Home</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="lessons">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Lessons</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="tasks">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>My Task</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="quizlet">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <span>Quizlet</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="ai">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V5M9 5h6M9 14h.01M15 14h.01M10 17h4"/></svg>
+          <span>AI teacher</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="reports">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          <span>Reports</span>
+        </a>
+        <a class="dash-nav__link" href="#" data-dash-nav="setting">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <span>Setting</span>
+        </a>
+      </nav>
+
+      <div class="dash-task-card">
+        <span class="dash-task-card__label">Create New Task</span>
+        <button class="dash-task-card__btn" type="button" aria-label="Create new task">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="dash-main">
+      <section class="dash-page dash-page--active" data-dash-page="home" aria-label="Home">
+        <header class="dash-page__header">
+          <h1>Welcome back, <span id="dash-user-name">Student</span></h1>
+          <p>Your learning space is ready. Let&#39;s continue where you left off.</p>
+        </header>
+
+        <div class="dash-stats-grid">
+          <div class="dash-stat-card dash-stat-card--accent">
+            <div class="dash-stat-card__label">Subjects</div>
+            <div class="dash-stat-card__value">13</div>
+            <div class="dash-stat-card__sub">classes available</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-card__label">Streak</div>
+            <div class="dash-stat-card__value">0</div>
+            <div class="dash-stat-card__sub">days in a row</div>
+          </div>
+          <div class="dash-stat-card">
+            <div class="dash-stat-card__label">Lessons done</div>
+            <div class="dash-stat-card__value">0</div>
+            <div class="dash-stat-card__sub">get started below</div>
+          </div>
+        </div>
+
+        <p class="dash-section-title">Quick start</p>
+        <div class="dash-quick-grid">
+          <button class="dash-quick-card" type="button" data-dash-nav="lessons">
+            <span class="dash-quick-card__icon" style="--dash-qc-bg: rgba(99,102,241,0.25)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <div>
+              <div class="dash-quick-card__title">Browse Lessons</div>
+              <div class="dash-quick-card__sub">13 subjects to explore</div>
+            </div>
+          </button>
+          <button class="dash-quick-card" type="button" data-dash-nav="quizlet">
+            <span class="dash-quick-card__icon" style="--dash-qc-bg: rgba(20,184,166,0.25)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </span>
+            <div>
+              <div class="dash-quick-card__title">Quizlet</div>
+              <div class="dash-quick-card__sub">Flashcards &amp; quick review</div>
+            </div>
+          </button>
+          <button class="dash-quick-card" type="button" data-dash-nav="ai">
+            <span class="dash-quick-card__icon" style="--dash-qc-bg: rgba(168,85,247,0.25)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M12 8V5M9 5h6M9 14h.01M15 14h.01M10 17h4"/></svg>
+            </span>
+            <div>
+              <div class="dash-quick-card__title">AI Teacher</div>
+              <div class="dash-quick-card__sub">Ask anything, anytime</div>
+            </div>
+          </button>
+          <button class="dash-quick-card" type="button" data-dash-nav="reports">
+            <span class="dash-quick-card__icon" style="--dash-qc-bg: rgba(59,130,246,0.25)">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            </span>
+            <div>
+              <div class="dash-quick-card__title">Reports</div>
+              <div class="dash-quick-card__sub">Track your progress</div>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <section class="dash-page" data-dash-page="lessons" hidden aria-label="Lessons">
+        <header class="dash-page__header">
+          <h1>Lessons</h1>
+          <p>Choose a class to open its lessons and materials.</p>
+        </header>
+        <div class="subject-grid" id="subject-grid" role="list"></div>
+      </section>
+
+      <section class="dash-page" data-dash-page="subject" hidden aria-label="Class lessons">
+        <button class="dash-back" type="button" id="subject-back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to Lessons
+        </button>
+        <header class="dash-page__header dash-page__header--subject">
+          <div class="subject-hero">
+            <span class="subject-hero__badge" id="subject-badge" aria-hidden="true">Ma</span>
+            <div>
+              <h1 id="subject-title">Math</h1>
+              <p id="subject-desc">Class overview and study modules.</p>
+            </div>
+          </div>
+        </header>
+        <div class="subject-modules" id="subject-modules" aria-label="Modules"></div>
+      </section>
+
+      <section class="dash-page" data-dash-page="tasks" hidden aria-label="My Task">
+        <header class="dash-page__header"><h1>My Task</h1><p>Track assignments and study goals.</p></header>
+        <p class="dash-empty">No tasks yet. Use <strong>Create New Task</strong> in the sidebar.</p>
+      </section>
+
+      <section class="dash-page" data-dash-page="quizlet" hidden aria-label="Quizlet">
+        <header class="dash-page__header"><h1>Quizlet</h1><p>Review cards and quick quizzes.</p></header>
+        <p class="dash-empty">Flashcard decks coming soon.</p>
+      </section>
+
+      <section class="dash-page" data-dash-page="ai" hidden aria-label="AI teacher">
+        <header class="dash-page__header"><h1>AI teacher</h1><p>Ask questions and get guided explanations.</p></header>
+        <p class="dash-empty">AI study assistant coming soon.</p>
+      </section>
+
+      <section class="dash-page" data-dash-page="reports" hidden aria-label="Reports">
+        <header class="dash-page__header"><h1>Reports</h1><p>See your study time and progress.</p></header>
+        <p class="dash-empty">Reports will appear after you complete lessons.</p>
+      </section>
+
+      <section class="dash-page" data-dash-page="setting" hidden aria-label="Setting">
+        <header class="dash-page__header"><h1>Setting</h1><p>Manage your account and preferences.</p></header>
+        <form class="dash-settings" aria-label="Settings">
+          <label class="dash-settings__row">
+            <span>Email</span>
+            <input type="email" id="dash-settings-email" readonly />
+          </label>
+          <label class="dash-settings__row">
+            <span>Email reminders</span>
+            <input type="checkbox" checked />
+          </label>
+          <label class="dash-settings__row">
+            <span>Reduced motion</span>
+            <input type="checkbox" id="dash-reduced-motion" />
+          </label>
+          <button class="dash-btn" type="button" id="dash-logout-btn">Log out</button>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
